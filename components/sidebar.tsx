@@ -23,21 +23,6 @@ export function Sidebar() {
         <p className="text-xs text-gray-500 mt-0.5">Forum Post Generator</p>
       </div>
       <nav className="flex-1 px-3 py-4 space-y-0.5">
-        <Link
-          href="/"
-          className={clsx(
-            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-            pathname === "/"
-              ? "bg-blue-50 text-blue-700"
-              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-          )}
-        >
-          <LayoutDashboard className="w-4 h-4 shrink-0" />
-          <span className="flex-1">Dashboard</span>
-        </Link>
-
-        <div className="my-2 border-t border-gray-100" />
-
         {nav.map(({ href, label, icon: Icon }) => (
           <Link
             key={href}
@@ -53,6 +38,21 @@ export function Sidebar() {
             <span className="flex-1">{label}</span>
           </Link>
         ))}
+
+        <div className="my-2 border-t border-gray-100" />
+
+        <Link
+          href="/"
+          className={clsx(
+            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+            pathname === "/"
+              ? "bg-blue-50 text-blue-700"
+              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+          )}
+        >
+          <LayoutDashboard className="w-4 h-4 shrink-0" />
+          <span className="flex-1">Dashboard</span>
+        </Link>
       </nav>
     </aside>
   );

@@ -51,6 +51,7 @@ All UI patterns, language, component styles, tech stack decisions, and file stru
 2. **No Microsoft/Azure AD auth for v1.** This is a single-user internal tool; login gating adds setup overhead (Azure app registration + tenant admin approval) with no real access-control benefit yet. If this tool gets a second user or moves to a shared environment, add NextAuth + Azure AD per Constitution §8.
 3. **History status labels (per Constitution §12, Page 3):** `Approved` (ready to post, not yet posted), `Posted` (confirmed live on the forum), `Rejected` (not used).
 4. **Forum categories** match the real REI Grove forum's actual sections (from the forum's own import data): New Member Introductions, Multifamily, Market Trends & Current Events, Maintenance, House Flipping, General Advice, Self-storage, Flipping/Rehabbing, Miscellaneous. Editable in Settings if the real forum's categories change.
+5. **Sidebar order (overrides Constitution §12):** Input, Approve, History, Settings are listed first, with Dashboard below a divider — the reverse of the Constitution's default (Dashboard above the four pages). Per explicit request.
 
 ---
 
