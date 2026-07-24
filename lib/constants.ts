@@ -1,9 +1,14 @@
+// Real REI Grove forum categories, from the forum's actual import data.
 export const DEFAULT_CATEGORIES = [
-  "General Discussion",
-  "Deal Analysis & Financing",
-  "Tenant Screening & Management",
-  "Legal & Compliance",
-  "Off-Topic / Community",
+  "New Member Introductions",
+  "Multifamily",
+  "Market Trends & Current Events",
+  "Maintenance",
+  "House Flipping",
+  "General Advice",
+  "Self-storage",
+  "Flipping/Rehabbing",
+  "Miscellaneous",
 ];
 
 export const POST_TYPES = [

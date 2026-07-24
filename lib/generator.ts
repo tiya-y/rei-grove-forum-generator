@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { BRAND_VOICE, RESOURCE_LIBRARY } from "@/lib/rei-grove-context";
+import { BRAND_VOICE, RESOURCE_LIBRARY, REAL_THREAD_EXAMPLES } from "@/lib/rei-grove-context";
 
 const client = new Anthropic();
 
@@ -68,11 +68,11 @@ export async function generatePosts(params: {
   const message = await client.messages.create({
     model: "claude-opus-4-8",
     max_tokens: 4096,
-    system: `You write forum discussion-starter posts for the REI Grove community forums, posted transparently by the REI Grove team account (never impersonating a member or fabricating a personal story). Goal: spark real engagement and replies from actual members.\n\n${BRAND_VOICE}\n\nREI Grove content library:\n${RESOURCE_LIBRARY}`,
+    system: `You write forum discussion-starter posts for the REI Grove community forums, posted transparently by the REI Grove team account (never impersonating a member or fabricating a personal story). Goal: spark real engagement and replies from actual members.\n\n${BRAND_VOICE}\n\nReal threads members have posted (for tone and specificity calibration only — match this level of concreteness, don't copy or lightly reword these):\n${REAL_THREAD_EXAMPLES}\n\nREI Grove content library:\n${RESOURCE_LIBRARY}`,
     messages: [
       {
         role: "user",
-        content: `Generate ${count} forum posts for the "${category}" category.\n\n${sourceInstruction}\n\n${postTypeInstruction}\n\nEach post should invite replies — ask a genuine question, invite people to share their number/approach/experience, or start a debate. Keep titles punchy and bodies short (2-5 sentences). Call propose_posts with the full batch.`,
+        content: `Generate ${count} forum posts for the "${category}" category.\n\n${sourceInstruction}\n\n${postTypeInstruction}\n\nEach post should invite replies — ask a genuine question, invite people to share their own specific numbers/approach/experience, or start a debate. Model the concreteness of the real threads above (real numbers, real scenarios) rather than generic prompts. Keep titles punchy and bodies short (2-5 sentences). Call propose_posts with the full batch.`,
       },
     ],
     tools: [PROPOSE_POSTS_TOOL],

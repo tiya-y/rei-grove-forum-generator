@@ -27,3 +27,27 @@ The Rentish Podcast: tenant horror stories, BRRRR method deep dives, house hacki
 
 eBooks: AI for Real Estate, Landlord Taxes, Evictions, How to Fill Units, Tenant Screening, Rent Collection, Increase Revenue.
 `.trim();
+
+// Real threads members have posted, one per forum category — for tone/format calibration only.
+// Members write in first person about their own specific deal; REI Grove team posts should
+// invite that same level of specificity (real numbers, real scenarios) without inventing a
+// fake personal story of our own.
+export const REAL_THREAD_EXAMPLES = `
+[New Member Introductions] "New here and diving into buy-and-hold" — Just closed on a first duplex, planning to hold long-term for cash flow, asks what to look for in a good tenant application.
+
+[Multifamily] "Cap rate expectations for a 12-unit in a secondary market" — 12-unit at a 7.2% cap rate, seller says it's 15% under market rent, asks whether that's a reasonable spread or grounds to push for a better entry price.
+
+[Market Trends & Current Events] "Rising insurance premiums eating into cash flow" — Landlord insurance renewal came in ~40% higher across three properties, asks if others are seeing the same and whether switching carriers or bundling has helped.
+
+[Maintenance] "HVAC replacement or repair for an older duplex" — 14-year-old AC unit, $900 repair quote vs $4,200 full replacement, asks whether it's worth replacing the whole system now given the age.
+
+[House Flipping] "Underwriting a flip with unknown foundation issues" — Inspection flagged possible foundation cracking, $3,000 just to assess it, asks how others budget for foundation unknowns before making an offer.
+
+[General Advice] "LLC vs umbrella policy for asset protection" — Four rentals held personally with a solid umbrella policy, asks what tipped others toward forming an LLC at a similar portfolio size.
+
+[Self-storage] "Converting a barn into self-storage units" — Old barn on five acres, zoning seems permissive but hasn't run real numbers, asks if anyone has done a conversion like this instead of new construction.
+
+[Flipping/Rehabbing] "Kitchen finishes that actually move the needle on resale" — Deciding between quartz and nice laminate on a mid-tier flip, asks what's actually worth the upgrade at that price point.
+
+[Miscellaneous] "Balancing a W2 job with a growing portfolio" — Six rentals while working full time, feeling unsustainable, asks at what point others brought on a property manager instead of self-managing.
+`.trim();

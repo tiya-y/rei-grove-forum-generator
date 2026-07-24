@@ -30,7 +30,7 @@ All UI patterns, language, component styles, tech stack decisions, and file stru
 ---
 
 ## Integrations
-- **Anthropic API (Claude):** Generates post titles/bodies. Requires `ANTHROPIC_API_KEY` env var. Uses the REI Grove brand voice and content library (see `lib/rei-grove-context.ts`).
+- **Anthropic API (Claude):** Generates post titles/bodies. Requires `ANTHROPIC_API_KEY` env var. Uses the REI Grove brand voice, content library, and a set of real (anonymized) forum threads for tone/specificity calibration — see `lib/rei-grove-context.ts`.
 - **No forum platform integration.** This tool does not post directly to the forum — a human copies the approved draft and posts it manually. (See Overrides below.)
 
 ---
@@ -50,7 +50,7 @@ All UI patterns, language, component styles, tech stack decisions, and file stru
 1. **No auto-send / no platform posting.** The Constitution's Phase 4 (Send/Act) doesn't apply here — REI Grove's forum has no posting API, so "Approve" simply marks a draft as ready and moves it to History with status `Approved`. A separate "Mark Posted" action in History (manual, human-triggered) records `postedAt`.
 2. **No Microsoft/Azure AD auth for v1.** This is a single-user internal tool; login gating adds setup overhead (Azure app registration + tenant admin approval) with no real access-control benefit yet. If this tool gets a second user or moves to a shared environment, add NextAuth + Azure AD per Constitution §8.
 3. **History status labels (per Constitution §12, Page 3):** `Approved` (ready to post, not yet posted), `Posted` (confirmed live on the forum), `Rejected` (not used).
-4. **Forum categories are a placeholder set**, editable in Settings, since the real REI Grove forum category list wasn't available at build time: General Discussion, Deal Analysis & Financing, Tenant Screening & Management, Legal & Compliance, Off-Topic / Community.
+4. **Forum categories** match the real REI Grove forum's actual sections (from the forum's own import data): New Member Introductions, Multifamily, Market Trends & Current Events, Maintenance, House Flipping, General Advice, Self-storage, Flipping/Rehabbing, Miscellaneous. Editable in Settings if the real forum's categories change.
 
 ---
 
