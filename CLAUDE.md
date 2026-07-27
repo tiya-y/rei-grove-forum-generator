@@ -3,7 +3,7 @@
 # REI Grove Forum Post Generator — Project Brief for Claude Code
 
 ## Overview
-A tool that helps the REI Grove team stimulate activity in the REI Grove community forums by generating discussion-starter posts (questions, polls, "share your win" prompts, etc.) — some tied to REI Grove's existing content library (calculators, checklists, The Breakdown, webinars, podcast episodes), some general real estate investing topics. All posts are transparently authored and posted as the official REI Grove team account — this tool does **not** simulate fake member personas or fabricate community engagement.
+A tool that helps the REI Grove team stimulate activity in the REI Grove community forums by generating discussion-starter posts (questions, polls, "share your win" prompts, etc.) — some tied to REI Grove's existing content library (calculators, checklists, The Breakdown, webinars, podcast episodes), some general real estate investing topics. Posts are published through the REI Grove team's own posting account, written in a casual, everyday-member voice so they read naturally in the forum. This tool does **not** create fake member accounts or attribute posts to fabricated individual people — see Overrides item 6 for the line this project holds and why.
 
 **Primary user:** Whoever manages the REI Grove community forum (non-technical)
 **Goal:** Give the forum manager a steady stream of on-brand discussion-starter drafts to post, instead of coming up with topics from scratch.
@@ -22,9 +22,9 @@ All UI patterns, language, component styles, tech stack decisions, and file stru
 | Page | Purpose |
 |---|---|
 | Dashboard (`/`) | Stat cards (pending review, approved this month, posted this month) + recent activity + "New Batch" CTA |
-| Input (`/input`) | Choose forum category, content source (resource-tied / general / mix), post type, and how many posts to generate |
+| Input (`/input`) | Choose one or more forum categories (posts are split evenly across them), content source (resource-tied / general / mix), post type, and how many posts to generate |
 | Approve (`/approve`) | Card queue — Edit / Regenerate / Delete / Approve each generated post; copy-to-clipboard for manual posting |
-| History (`/history`) | Table of all posts that left the queue — Approved, Posted, Rejected — with a "Mark Posted" action and filters |
+| History (`/history`) | Table of all posts that left the queue — Approved, Posted, Rejected — with "Mark Posted", permanent "Delete", and filters |
 | Settings (`/settings`) | Anthropic API key status, editable forum category list |
 
 ---
@@ -52,6 +52,9 @@ All UI patterns, language, component styles, tech stack decisions, and file stru
 3. **History status labels (per Constitution §12, Page 3):** `Approved` (ready to post, not yet posted), `Posted` (confirmed live on the forum), `Rejected` (not used).
 4. **Forum categories** match the real REI Grove forum's actual sections (from the forum's own import data): New Member Introductions, Multifamily, Market Trends & Current Events, Maintenance, House Flipping, General Advice, Self-storage, Flipping/Rehabbing, Miscellaneous. Editable in Settings if the real forum's categories change.
 5. **Sidebar order (overrides Constitution §12):** Input, Approve, History, Settings are listed first, with Dashboard below a divider — the reverse of the Constitution's default (Dashboard above the four pages). Per explicit request.
+6. **History delete (overrides Constitution §12, Page 3):** Constitution says "there is no delete in History." This app allows a permanent delete from History, per explicit request.
+7. **Post voice, held line:** Posts are written in a casual, first-person, everyday-investor voice per explicit request, not a "brand" or "moderator" tone. What this project does **not** do, even on request: attribute a post to a specific fabricated individual (a fake username/persona) to make it look like it came from a real member who doesn't exist. That crosses into manufactured social proof (astroturfing) and misleads real forum members about who they're talking to. The posting account is always REI Grove's own; only the writing style is casual.
+8. **Batch generation across multiple categories:** the Input page lets a user select multiple categories at once. `/api/generate` splits the requested total post count evenly across the selected categories (minimum 1 per category) and runs one generation call per category.
 
 ---
 

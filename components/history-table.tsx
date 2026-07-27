@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import type { ForumPost } from "@prisma/client";
 import { StatusBadge } from "@/components/status-badge";
 import { formatWhen } from "@/lib/format-date";
@@ -68,10 +68,10 @@ function HistoryRow({
   onToggle: () => void;
 }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [busy, setBusy] = useState<"markPosted" | "delete" | null>(null);
 
   async function handleMarkPosted() {
-    setLoading(true);
+    setBusy("markPosted");
     try {
       const res = await fetch(`/api/posts/${post.id}/mark-posted`, { method: "POST" });
       const json = await res.json();
@@ -82,7 +82,24 @@ function HistoryRow({
       toast.error("Failed to mark post as posted. Try again.");
       console.error(err);
     } finally {
-      setLoading(false);
+      setBusy(null);
+    }
+  }
+
+  async function handleDelete() {
+    if (!confirm("Delete this post permanently? This cannot be undone.")) return;
+    setBusy("delete");
+    try {
+      const res = await fetch(`/api/posts/${post.id}/permanent-delete`, { method: "POST" });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error);
+      toast.success("Post deleted.");
+      router.refresh();
+    } catch (err) {
+      toast.error("Failed to delete post. Try again.");
+      console.error(err);
+    } finally {
+      setBusy(null);
     }
   }
 
@@ -102,13 +119,25 @@ function HistoryRow({
           {post.status === "APPROVED" && (
             <button
               onClick={handleMarkPosted}
-              disabled={loading}
-              className="text-green-600 font-medium hover:underline disabled:opacity-50 inline-flex items-center gap-1"
+              disabled={busy !== null}
+              className="text-green-600 font-medium hover:underline disabled:opacity-50 inline-flex items-center gap-1 mr-3"
             >
-              {loading && <Loader2 className="w-3 h-3 animate-spin" />}
+              {busy === "markPosted" && <Loader2 className="w-3 h-3 animate-spin" />}
               Mark Posted
             </button>
           )}
+          <button
+            onClick={handleDelete}
+            disabled={busy !== null}
+            title="Delete permanently"
+            className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors disabled:opacity-50 inline-flex align-middle"
+          >
+            {busy === "delete" ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Trash2 className="w-4 h-4" />
+            )}
+          </button>
         </td>
       </tr>
       {expanded && (

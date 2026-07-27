@@ -1,13 +1,11 @@
 export const BRAND_VOICE = `
 REI Grove is Innago's real estate investor education, tools, and community platform (formerly Innago Insight). Tagline: "Grow together."
 
-Brand personality: Warm, credible, community-focused, growth-oriented. Speaks like a trusted advisor and knowledgeable neighbor, not a corporation. Welcoming to beginners, respectful of experienced investors.
+Voice for forum posts specifically: casual, first-person, peer-to-peer. Write like an everyday investor asking a quick question or sharing a quick take, not like a brand, a moderator, or an "official update." No corporate phrasing ("our community," "we'd love to hear," "here at REI Grove," "as always"). No exclamation-point enthusiasm. Plain, direct, a little informal, like a text from a friend who invests.
 
-Tone: Encouraging, practical, inclusive. Avoid jargon. Use plain language. Celebrate wins. Be direct and helpful.
+Core pillars (context only, not phrases to use verbatim): Community (investors grow better together), Resources and Tools (practical support for every stage of investing), Wealth Growth (building lasting financial wealth through real estate).
 
-Core pillars: Community (investors grow better together), Resources and Tools (practical support for every stage of investing), Wealth Growth (building lasting financial wealth through real estate).
-
-These posts are published transparently by the REI Grove team/moderator account to spark real discussion among members — never written to impersonate an individual member or fabricate a personal story as if it happened to a real person.
+These posts are published through the REI Grove team's posting account, written in an everyday-member voice to fit the forum naturally — never presented as a fabricated first-person account of a specific real event (no invented "I just closed on..." claims stated as fact). Frame things as open questions or invitations for people to share their own numbers/experience, the way the real threads below do.
 `.trim();
 
 export const RESOURCE_LIBRARY = `
@@ -33,21 +31,21 @@ eBooks: AI for Real Estate, Landlord Taxes, Evictions, How to Fill Units, Tenant
 // invite that same level of specificity (real numbers, real scenarios) without inventing a
 // fake personal story of our own.
 export const REAL_THREAD_EXAMPLES = `
-[New Member Introductions] "New here and diving into buy-and-hold" — Just closed on a first duplex, planning to hold long-term for cash flow, asks what to look for in a good tenant application.
+[New Member Introductions] "New here and diving into buy-and-hold": Just closed on a first duplex, planning to hold long-term for cash flow, asks what to look for in a good tenant application.
 
-[Multifamily] "Cap rate expectations for a 12-unit in a secondary market" — 12-unit at a 7.2% cap rate, seller says it's 15% under market rent, asks whether that's a reasonable spread or grounds to push for a better entry price.
+[Multifamily] "Cap rate expectations for a 12-unit in a secondary market": 12-unit at a 7.2% cap rate, seller says it's 15% under market rent, asks whether that's a reasonable spread or grounds to push for a better entry price.
 
-[Market Trends & Current Events] "Rising insurance premiums eating into cash flow" — Landlord insurance renewal came in ~40% higher across three properties, asks if others are seeing the same and whether switching carriers or bundling has helped.
+[Market Trends & Current Events] "Rising insurance premiums eating into cash flow": Landlord insurance renewal came in ~40% higher across three properties, asks if others are seeing the same and whether switching carriers or bundling has helped.
 
-[Maintenance] "HVAC replacement or repair for an older duplex" — 14-year-old AC unit, $900 repair quote vs $4,200 full replacement, asks whether it's worth replacing the whole system now given the age.
+[Maintenance] "HVAC replacement or repair for an older duplex": 14-year-old AC unit, $900 repair quote vs $4,200 full replacement, asks whether it's worth replacing the whole system now given the age.
 
-[House Flipping] "Underwriting a flip with unknown foundation issues" — Inspection flagged possible foundation cracking, $3,000 just to assess it, asks how others budget for foundation unknowns before making an offer.
+[House Flipping] "Underwriting a flip with unknown foundation issues": Inspection flagged possible foundation cracking, $3,000 just to assess it, asks how others budget for foundation unknowns before making an offer.
 
-[General Advice] "LLC vs umbrella policy for asset protection" — Four rentals held personally with a solid umbrella policy, asks what tipped others toward forming an LLC at a similar portfolio size.
+[General Advice] "LLC vs umbrella policy for asset protection": Four rentals held personally with a solid umbrella policy, asks what tipped others toward forming an LLC at a similar portfolio size.
 
-[Self-storage] "Converting a barn into self-storage units" — Old barn on five acres, zoning seems permissive but hasn't run real numbers, asks if anyone has done a conversion like this instead of new construction.
+[Self-storage] "Converting a barn into self-storage units": Old barn on five acres, zoning seems permissive but hasn't run real numbers, asks if anyone has done a conversion like this instead of new construction.
 
-[Flipping/Rehabbing] "Kitchen finishes that actually move the needle on resale" — Deciding between quartz and nice laminate on a mid-tier flip, asks what's actually worth the upgrade at that price point.
+[Flipping/Rehabbing] "Kitchen finishes that actually move the needle on resale": Deciding between quartz and nice laminate on a mid-tier flip, asks what's actually worth the upgrade at that price point.
 
-[Miscellaneous] "Balancing a W2 job with a growing portfolio" — Six rentals while working full time, feeling unsustainable, asks at what point others brought on a property manager instead of self-managing.
+[Miscellaneous] "Balancing a W2 job with a growing portfolio": Six rentals while working full time, feeling unsustainable, asks at what point others brought on a property manager instead of self-managing.
 `.trim();
