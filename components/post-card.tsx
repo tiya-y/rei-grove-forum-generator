@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Pencil, RotateCcw, Trash2, Check, Loader2, Copy } from "lucide-react";
+import { Pencil, RotateCcw, Trash2, Loader2, Copy } from "lucide-react";
 import type { ForumPost } from "@prisma/client";
 import { postTypeLabel } from "@/lib/constants";
 
@@ -72,19 +72,23 @@ export function PostCard({ post }: { post: ForumPost }) {
     }
   }
 
-  async function handleApprove() {
+  async function handleCopyAndApprove() {
+    setBusy("approve");
+    try {
+      await navigator.clipboard.writeText(`${post.title}\n\n${post.body}`);
+    } catch (err) {
+      setBusy(null);
+      toast.error("Couldn't copy to clipboard — nothing was moved. Try again.");
+      console.error(err);
+      return;
+    }
     try {
       await callAction("approve", `/api/posts/${post.id}/approve`);
-      toast.success("Post approved.");
+      toast.success("Copied to clipboard — moved to History.");
       router.refresh();
     } catch {
       // toast already shown
     }
-  }
-
-  async function handleCopy() {
-    await navigator.clipboard.writeText(`${post.title}\n\n${post.body}`);
-    toast.success("Copied to clipboard.");
   }
 
   return (
@@ -160,13 +164,6 @@ export function PostCard({ post }: { post: ForumPost }) {
               )}
             </button>
             <button
-              onClick={handleCopy}
-              className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
-              title="Copy to clipboard"
-            >
-              <Copy className="w-4 h-4" />
-            </button>
-            <button
               onClick={handleDelete}
               disabled={busy === "delete"}
               className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors disabled:opacity-50"
@@ -180,16 +177,17 @@ export function PostCard({ post }: { post: ForumPost }) {
             </button>
           </div>
           <button
-            onClick={handleApprove}
+            onClick={handleCopyAndApprove}
             disabled={busy === "approve"}
+            title="Copies the post and moves it to History"
             className="flex items-center gap-2 px-3 py-1.5 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50"
           >
             {busy === "approve" ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
-              <Check className="w-4 h-4" />
+              <Copy className="w-4 h-4" />
             )}
-            Approve
+            Copy &amp; Move to History
           </button>
         </div>
       )}
