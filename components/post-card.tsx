@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Pencil, RotateCcw, Trash2, Loader2, Copy } from "lucide-react";
+import { Pencil, RotateCcw, Trash2, Loader2, Copy, Check, Send } from "lucide-react";
 import type { ForumPost } from "@prisma/client";
 import { postTypeLabel } from "@/lib/constants";
 
@@ -13,6 +13,7 @@ export function PostCard({ post }: { post: ForumPost }) {
   const [title, setTitle] = useState(post.title);
   const [body, setBody] = useState(post.body);
   const [busy, setBusy] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
   const dirty = title !== post.title || body !== post.body;
 
   async function callAction(action: string, path: string, options?: RequestInit) {
@@ -72,19 +73,22 @@ export function PostCard({ post }: { post: ForumPost }) {
     }
   }
 
-  async function handleCopyAndApprove() {
-    setBusy("approve");
+  async function handleCopy() {
     try {
       await navigator.clipboard.writeText(`${post.title}\n\n${post.body}`);
+      setCopied(true);
+      toast.success("Copied to clipboard.");
     } catch (err) {
-      setBusy(null);
-      toast.error("Couldn't copy to clipboard — nothing was moved. Try again.");
+      toast.error("Couldn't copy to clipboard. Try again.");
       console.error(err);
-      return;
     }
+  }
+
+  async function handleMarkPosted() {
+    setBusy("posted");
     try {
-      await callAction("approve", `/api/posts/${post.id}/approve`);
-      toast.success("Copied to clipboard — moved to History.");
+      await callAction("mark posted", `/api/posts/${post.id}/mark-posted`);
+      toast.success("Posted to REI Grove — moved to History.");
       router.refresh();
     } catch {
       // toast already shown
@@ -176,19 +180,33 @@ export function PostCard({ post }: { post: ForumPost }) {
               )}
             </button>
           </div>
-          <button
-            onClick={handleCopyAndApprove}
-            disabled={busy === "approve"}
-            title="Copies the post and moves it to History"
-            className="flex items-center gap-2 px-3 py-1.5 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50"
-          >
-            {busy === "approve" ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Copy className="w-4 h-4" />
-            )}
-            Copy &amp; Move to History
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleCopy}
+              title="Copy the post text"
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                copied
+                  ? "bg-gray-100 text-gray-600"
+                  : "bg-gray-800 text-white hover:bg-gray-900"
+              }`}
+            >
+              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? "Copied" : "Copy"}
+            </button>
+            <button
+              onClick={handleMarkPosted}
+              disabled={!copied || busy === "posted"}
+              title={copied ? "Mark as posted and move to History" : "Copy the text first"}
+              className="flex items-center gap-2 px-3 py-1.5 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:hover:bg-green-600"
+            >
+              {busy === "posted" ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Send className="w-4 h-4" />
+              )}
+              Posted to REI Grove
+            </button>
+          </div>
         </div>
       )}
     </div>

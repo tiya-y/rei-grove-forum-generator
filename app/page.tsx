@@ -11,13 +11,25 @@ async function getDashboardData() {
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
 
-  const [needsReview, approved, postedThisMonth, totalPosted, recent] = await Promise.all([
-    prisma.forumPost.count({ where: { status: "PENDING_REVIEW" } }),
-    prisma.forumPost.count({ where: { status: "APPROVED" } }),
-    prisma.forumPost.count({ where: { status: "POSTED", postedAt: { gte: startOfMonth } } }),
-    prisma.forumPost.count({ where: { status: "POSTED" } }),
-    prisma.forumPost.findMany({ orderBy: { updatedAt: "desc" }, take: 8 }),
-  ]);
+  const [needsReview, approved, postedThisMonth, totalPosted, recentNeedsReview, recentOther] =
+    await Promise.all([
+      prisma.forumPost.count({ where: { status: "PENDING_REVIEW" } }),
+      prisma.forumPost.count({ where: { status: "APPROVED" } }),
+      prisma.forumPost.count({ where: { status: "POSTED", postedAt: { gte: startOfMonth } } }),
+      prisma.forumPost.count({ where: { status: "POSTED" } }),
+      prisma.forumPost.findMany({
+        where: { status: "PENDING_REVIEW" },
+        orderBy: { updatedAt: "desc" },
+        take: 8,
+      }),
+      prisma.forumPost.findMany({
+        where: { status: { notIn: ["PENDING_REVIEW", "APPROVED", "POSTED"] } },
+        orderBy: { updatedAt: "desc" },
+        take: 8,
+      }),
+    ]);
+
+  const recent = [...recentNeedsReview, ...recentOther].slice(0, 8);
 
   return { needsReview, approved, postedThisMonth, totalPosted, recent };
 }
